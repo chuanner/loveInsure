@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>签约商家</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no，minimal-ui">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="format-detection" content="telephone=no,email=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" type="text/css" href="../css/love-xzc.css" />
+		<script type="text/javascript" src="../js/fastclick.js"></script>
+		<script type="text/javascript" src="../js/adapt-screen.js"></script>
+	</head>
+
+	<body>
+		<div class="globel-gray-wrap">
+			<ul>
+				<li class="list-li2">
+					<div class="shop-bar">
+						<span>必胜客连锁店</span>
+						<span class="count"><i class="jian"></i></span>
+					</div>
+					<div class="shop-msg">
+						<p><span class="msg-item">协议号：</span><span class="color-black">777777</span></p>
+						<p><span class="msg-item">联系人：</span><span class="color-black">刘强</span></p>
+						<p><span class="msg-item">联系人电话：</span><span class="color-black">13688889999</span></p>
+						<p><span class="msg-item">签约时间：</span><span class="color-black">2016-12-01 14:34:26</span></p>
+						<img class="shop-picture" src="../img/shop-msg1.jpg" />
+					</div>
+				</li>
+
+				<li class="list-li2">
+					<div class="shop-bar">
+						<span>家乐福超市</span>
+						<span class="count"><i class="jian"></i></span>
+					</div>
+					<div class="shop-msg">
+						<p><span class="msg-item">协议号：</span><span class="color-black">777777</span></p>
+						<p><span class="msg-item">联系人：</span><span class="color-black">刘强</span></p>
+						<p><span class="msg-item">联系人电话：</span><span class="color-black">13688889999</span></p>
+						<p><span class="msg-item">签约时间：</span><span class="color-black">2016-12-01 14:34:26</span></p>
+						<img class="shop-picture" src="../img/shop-msg1.jpg" />
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			$(".nav-bar li").on("click", function() {
+				$(this).children().addClass("tab-orange");
+				$(this).siblings().children().removeClass("tab-orange");
+			})
+			$(".shop-bar").on("click", function() {
+				$(this).next().slideToggle(300);
+				$(this).children("span").children("i").toggleClass("rotate180");
+			})
+		})
+	</script>
+
+</html>

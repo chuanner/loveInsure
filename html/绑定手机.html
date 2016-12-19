@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>绑定手机</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no，minimal-ui">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="format-detection" content="telephone=no,email=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" type="text/css" href="../css/love-xzc.css" />
+		<script type="text/javascript" src="../js/fastclick.js"></script>
+		<script type="text/javascript" src="../js/adapt-screen.js"></script>
+	</head>
+
+	<body>
+		<div class="globel-white-wrap">
+			<h1 class="bind-title">欢迎来到<span class="tab-orange">恋爱消费保</span></h1>
+			<form action="" method="post">
+				<div class="bind-box">
+					<div class="bind-cell">
+						<input class="bind-input" id="telephone" type="tel" placeholder="请输入手机号" check-type="phone" check-msg="手机号有误" />
+						<i class="right0-2"></i>
+					</div>
+
+				</div>
+				<div class="bind-box">
+					<div class="bind-cell">
+						<input class="bind-input bind-half" type="tel" placeholder="请输入验证码" check-type="vCode" check-msg="验证码有误" />
+						<i class="right4-2"></i>
+						<input class="bind-yzm-btn" type="button" value="获取验证码" />
+					</div>
+				</div>
+				<input class="bind-submit" type="submit" value="绑定" />
+			</form>
+			<div class="state-msa"></div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../js/jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			//表单验证
+			var checkRules = {
+				"phone": /^1[34578]\d{9}$/,
+				"vCode": /^[0-9]{6}$/
+			}
+			var checkResult;
+
+			function checkFn($this, type) {
+				if($this.attr("check-type") == "") {
+					checkResult = true;
+				} else {
+					checkResult = checkRules[$this.attr(type)].test($this.val());
+				}
+			}
+			//输入验证
+			$(".bind-input").on("input", function() {
+				checkFn($(this), "check-type");
+				if($(this).val() != "" && checkResult) {
+					$(this).next("i").removeClass("bind-warn");
+					console.log("输入验证-通过");
+				}
+			})
+
+			//失焦验证
+			$(".bind-input").on("blur",function() {
+				checkFn($(this), "check-type");
+				console.log("失焦验证");
+				if($(this).val() == "" || !checkResult) {
+					$(this).next("i").addClass("bind-warn");
+				}
+			})
+
+			//发送验证码
+			$(".bind-yzm-btn").on("click",function() {
+				checkFn($("#telephone"), "check-type");
+				if($("#telephone").val() != "" && checkResult) {
+					console.log("可以发送验证码");
+					function count(n, $target) {
+						if(n >= 0) {
+							$target.css({
+								pointerEvents: "none"
+							});
+							//验证码倒计时
+							$target.val(n + '秒后重发');
+							setTimeout(function() {
+								count(--n, $target);
+							}, 1000);
+						} else {
+							$target.css({
+								pointerEvents: "auto"
+							});
+							$target.val('获取验证码');
+						}
+					}
+					count(60, $(this));
+				}
+			});
+
+			//提交表单时的验证
+			$("form").submit(function(event) {
+				$(".bind-input").each(function(i) {
+					checkFn($(this), "check-type");
+					//输入框为空时，弹出提示
+					if($(this).val() == "") {
+						console.log("提交-输入框为空");
+						$(".state-msa").addClass("state-msg-block").html($(this).attr("placeholder"));
+						disappear();
+						event.preventDefault();
+						return false;
+					} else if(!checkResult) {
+						console.log("提交-格式错误");
+						$(".state-msa").addClass("state-msg-block").html($(this).attr("check-msg"));
+						disappear();
+						event.preventDefault();
+						return false;
+					}
+				});
+			});
+
+			//提示框自动消失
+			function disappear() {
+				setTimeout(function() {
+					$(".state-msa").removeClass("state-msg-block");
+				}, 1000)
+			}
+		})
+	</script>
+
+</html>
